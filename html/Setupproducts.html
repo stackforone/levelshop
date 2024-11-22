@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css">
+    <title>Manage Products</title>
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .product-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .product-form input[type="text"],
+        .product-form input[type="number"],
+        .product-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .product-form label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .product-form button {
+            width: 80%;
+            margin-top: 10px;
+            margin-left: 30px;
+            padding: 8px;
+            background-color: #e53e3e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Kanit', sans-serif;
+        }
+        .product-list {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .product-item {
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .product-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .product-item .details {
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+        .product-item button {
+            background-color: #e53e3e;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 5px;
+            font-family: 'Kanit', sans-serif;
+ 
+        }
+        .edit-btn {
+            background-color: #3182CE;
+        }
+  
+        .menu {
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #333;
+            font-size: 12px;
+            text-align: center;
+        }
+  
+        .menu a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+        .menu a i {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+  
+       .menu2 {
+    width: 250px; /* ปรับตามที่เหมาะสม */
+    background-color: white;
+    border-right: 1px solid #ddd;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 60px;
+    overflow-y: auto;
+    z-index: 1000; /* เพิ่มความสูงของ z-index */
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-200%); /* ซ่อนแถบเมนู */
+}
+
+        .menu2.slide-out {
+    transform: translateX(0); /* เลื่อนแถบเมนูออกมา */
+}
+      
+        .header-red {
+            background-color: #ff4b2b;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .header-red img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-bottom: 5px;
+        }
+
+        .header-red h3, .header-red p {
+            margin: 5px 0;
+            font-size: 12px;
+        }
+  
+        .menu-item {
+            padding: 10px 15px;
+            font-size: 13px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            color: #333;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            font-size: 17px;
+        }
+
+        .menu-item i.fa-chevron-down {
+            margin-left: auto;
+            font-size: 10px;
+        }
+
+        .menu-item a {
+            color: #333;
+            text-decoration: none;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            width: 100%;
+        }
+
+        .menu-item a:focus {
+            outline: none;
+        }
+
+        .menu-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .menu-item.active {
+            background-color: #ffe1dd;
+        }
+
+        .submenu {
+            display: none;
+            background-color: #f9f9f9;
+        }
+
+        .submenu .menu-item {
+            padding-left: 40px;
+            font-size: 13px;
+        }
+
+        .summary-section {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .summary-section button {
+            background-color: #ff4b2b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+  
+     <div class="menu">
+            <a href="shopping_mall.html">
+                <i class="las la-home fs-20 opacity-60"></i> Mall
+            </a>
+            <a href="dashboard.html">
+                <i class="las la-tachometer-alt fs-20 opacity-60"></i> ควบคุม
+            </a>
+            <a href="shop.html">
+                <i class="las la-shopping-bag la-2x text-white"></i> รถเข็น
+            </a>
+            <a href="Notification.html">
+                <i class="las la-bell fs-20 opacity-60"></i> การแจ้งเตือน
+            </a>
+            <a href="sidebar_menu.html" id="menuButton"><i class="las la-user"></i> ฉัน</a>
+            </a>
+        </div>
+  
+    <h2>จัดการผลิตภัณฑ์ใหม่</h2>
+    <div class="product-form">
+        <label for="product-name">ชื่อสินค้า</label>
+        <input type="text" id="product-name" placeholder="ชื่อสินค้า">
+
+        <label for="product-price">ราคา</label>
+        <input type="number" id="product-price" placeholder="ราคา">
+
+        <label for="product-rating">คะแนน</label>
+        <select id="product-rating">
+            <option value="1">⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="5">⭐⭐⭐⭐⭐</option>
+        </select>
+
+        <label for="product-image">เลือกรูปภาพ</label>
+        <input type="file" id="product-image" accept="image/*">
+
+        <button onclick="addOrUpdateProduct()">เพิ่มหรืออัปเดตผลิตภัณฑ์</button>
+    </div>
+
+    <div class="product-list" id="product-list"></div>
+
+    <script>
+        let editIndex = -1;
+
+        function loadProducts() {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = '';
+
+            products.forEach((product, index) => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+
+                const productImage = document.createElement('img');
+                productImage.src = product.image;
+
+                const details = document.createElement('div');
+                details.className = 'details';
+                details.innerHTML = `
+                    <strong>${product.name}</strong><br>
+                    ราคา: ฿${product.price}<br>
+                    คะแนน: ${'⭐'.repeat(product.rating)}
+                `;
+
+                const editButton = document.createElement('button');
+                editButton.className = 'edit-btn';
+                editButton.textContent = 'แก้ไข';
+                editButton.onclick = () => editProduct(index);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'ลบ';
+                deleteButton.onclick = () => deleteProduct(index);
+
+                productItem.appendChild(productImage);
+                productItem.appendChild(details);
+                productItem.appendChild(editButton);
+                productItem.appendChild(deleteButton);
+
+                productList.appendChild(productItem);
+            });
+        }
+
+        function addOrUpdateProduct() {
+            const name = document.getElementById('product-name').value;
+            const price = document.getElementById('product-price').value;
+            const rating = document.getElementById('product-rating').value;
+            const imageInput = document.getElementById('product-image');
+            const image = imageInput.files[0];
+
+            if (name && price && rating) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const newProduct = {
+                        name,
+                        price,
+                        rating: parseInt(rating),
+                        image: image ? e.target.result : (editIndex >= 0 ? getCurrentImage(editIndex) : "")
+                    };
+
+                    const products = JSON.parse(localStorage.getItem('products')) || [];
+
+                    if (editIndex >= 0) {
+                        products[editIndex] = newProduct;
+                        editIndex = -1;
+                    } else {
+                        products.push(newProduct);
+                    }
+
+                    localStorage.setItem('products', JSON.stringify(products));
+
+                    loadProducts();
+                    clearForm();
+                };
+                
+                if (image) reader.readAsDataURL(image);
+                else reader.onload();
+            } else {
+                alert('กรุณากรอกข้อมูลให้ครบ');
+            }
+        }
+
+        function editProduct(index) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const product = products[index];
+
+            document.getElementById('product-name').value = product.name;
+            document.getElementById('product-price').value = product.price;
+            document.getElementById('product-rating').value = product.rating;
+            document.getElementById('product-image').value = '';
+
+            editIndex = index;
+        }
+
+        function deleteProduct(index) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            products.splice(index, 1);
+            localStorage.setItem('products', JSON.stringify(products));
+            loadProducts();
+        }
+
+        function getCurrentImage(index) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            return products[index].image;
+        }
+
+        function clearForm() {
+            document.getElementById('product-name').value = '';
+            document.getElementById('product-price').value = '';
+            document.getElementById('product-rating').value = '1';
+            document.getElementById('product-image').value = '';
+        }
+
+        // Load products on page load
+        loadProducts();
+    </script>
+
+     <div class="menu2">
+        <!-- ส่วนแถบสีแดงด้านบนของ sidebar -->
+        <div class="header-red">
+            <img src="https://via.placeholder.com/40" alt="User Image">
+            <h3 id="fullname">Test</h3>
+            <p id="phone">000</p>
+            <p id="usercode"></p>
+            <p id="userid">ID: 37244</p>
+        </div>
+
+        <div class="menu-item active">
+            <a href="dashboard.html"><i class="las la-home"></i> แผงควบคุม</a>
+        </div>
+        <div class="menu-item">
+            <i class="las la-gem"></i> ผลิตภัณฑ์ <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="submenu">
+            <a href="product_list.html" class="menu-item"><i class="las la-gem"></i> ผลิตภัณฑ์</a>
+            <a href="add_new_product.html" class="menu-item"><i class="las la-upload"></i> อัปโหลดผลิตภัณฑ์</a>
+            <div class="menu-item"><i class="las la-truck"></i> ผลิตภัณฑ์ขายส่ง</div>
+            <div class="menu-item"><i class="las la-file-upload"></i> ไฟล์ที่อัปโหลด</div>
+        </div>
+        <div class="menu-item">
+            <i class="las la-shopping-cart"></i> คำสั่งซื้อ <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="submenu">
+            <div class="menu-item"><i class="las la-clock"></i> รอดำเนินการ</div>
+            <div class="menu-item"><i class="las la-check-circle"></i> ได้รับการยืนยัน</div>
+        </div>
+        <div class="menu-item">
+            <a href="setting.html"><i class="las la-store"></i> การตั้งค่าร้านค้า</a>
+        </div>
+        <div class="menu-item">
+            <i class="las la-wallet"></i> กระเป๋าเงิน <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="submenu">
+            <a href="wallet_topup.html" class="menu-item"><i class="las la-wallet"></i> กระเป๋าเงินของฉัน</a>
+            <a href="history.html" class="menu-item"><i class="las la-history"></i> ประวัติการชำระเงิน</a>
+            <div class="menu-item"><i class="las la-tag"></i> คูปอง</div>
+            <a href="withdraw_history.html" class="menu-item"><i class="las la-money-bill-alt"></i> ยอดเงินในกระเป๋า</a>
+            <div class="menu-item"><i class="las la-sync"></i> ตั๋วสนับสนุน</div>
+        </div>
+        <div class="menu-item">
+          <a href="profile.html"><i class="las la-user"></i> จัดการโปรไฟล์</a>
+        </div>
+
+        <div class="summary-section">
+            <h3>ขายจำนวน</h3>
+            <p>ยอดขายของคุณ (เดือนปัจจุบัน)</p>
+            <button>฿0.00</button>
+            <p>ขายทั้งหมด: ฿0.00</p>
+        </div>
+
+        <div class="logout">
+    <a href="login.html" class="logout-link">
+        <button class="logout-button">
+            <i class="fas fa-sign-out-alt"></i> <span class="logout-text">ออกจากระบบ</span>
+        </button>
+    </a>
+</div>
+    </div>
+
+<style>
+.logout {
+    text-align: center; /* จัดให้อยู่ด้านขวา */
+    padding: 20px;
+}
+
+.logout-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.logout-button {
+    cursor: pointer;
+    padding: 8px 18px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* ระยะห่างระหว่างไอคอนและข้อความ */
+    margin-left: 38px;
+}
+
+.logout-button:hover {
+    background-color: #e60000; /* เปลี่ยนสีเมื่อ hover */
+}
+
+.logout-text {
+    font-family: 'Kanit', sans-serif; /* ใช้ฟอนต์ Kanit เฉพาะคำว่า "ออกจากระบบ" */
+    font-size: 14px;
+}
+</style>
+       
+       <script>
+        // ฟังก์ชันแสดงข้อมูลจาก Local Storage
+        document.getElementById('fullname').textContent = localStorage.getItem('fullname') || 'Test';
+        document.getElementById('phone').textContent = localStorage.getItem('phone') || '000';
+        document.getElementById('usercode').textContent = "รหัสสำหรับ: " + (localStorage.getItem('usercode') || Math.random().toString(36).substring(2, 10));
+        document.getElementById('userid').textContent = "ID: " + (localStorage.getItem('userid') || Math.floor(Math.random() * 100000));
+
+        // บันทึกข้อมูลสุ่มเข้า Local Storage ถ้ายังไม่มี
+        if (!localStorage.getItem('usercode')) {
+            localStorage.setItem('usercode', document.getElementById('usercode').textContent.split(": ")[1]);
+        }
+
+        if (!localStorage.getItem('userid')) {
+            localStorage.setItem('userid', document.getElementById('userid').textContent.split(": ")[1]);
+        }
+
+        // ฟังก์ชันเปิด/ปิดเมนูย่อย
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const isActive = this.classList.contains('active');
+                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                document.querySelectorAll('.submenu').forEach(sub => sub.style.display = 'none');
+
+                if (!isActive) {
+                    this.classList.add('active');
+                    const nextElement = this.nextElementSibling;
+                    if (nextElement && nextElement.classList.contains('submenu')) {
+                        nextElement.style.display = 'block';
+                    }
+                }
+            });
+        });
+    </script>
+  
+      <script>
+    document.getElementById('menuButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    const menu = document.querySelector('.menu2');
+    let overlay = document.getElementById('overlay');
+
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'overlay';
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'transparent'; // ปรับให้โปร่งใส
+        overlay.style.zIndex = '999';
+        document.body.appendChild(overlay);
+    }
+
+    menu.classList.toggle('slide-out');
+    overlay.style.display = 'block';
+
+    overlay.addEventListener('click', function() {
+        menu.classList.remove('slide-out');
+        overlay.style.display = 'none';
+    });
+});
+</script>
+</body>
+</html>

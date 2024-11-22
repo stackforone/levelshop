@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>จัดการโปรไฟล์</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding-bottom: 40px;
+        }
+        .container {
+            width: 80%;
+            max-width: 400px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            margin-top: 15px;
+        }
+        h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #333;
+            margin-top: 15px;
+        }
+        input[type="text"], input[type="password"], input[type="email"], select {
+            width: 85%;
+            padding: 7px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .file-upload {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .file-upload div {
+            padding: 7px;
+            border: 1px solid #ddd;
+            text-align: center;
+            flex: 1;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .file-upload div:hover {
+            background-color: #f0f0f0;
+        }
+        .add-address {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+        .add-address .plus {
+            font-size: 24px;
+            color: #757575;
+        }
+        .add-address p {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #ff3b30;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 7px;
+            background-color: #ff3b30;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 15px;
+            font-family: 'Kanit', sans-serif;
+        }
+        .button:hover {
+            background-color: #e64a19;
+        }
+  
+        input[type="text"], input[type="password"], input[type="email"], select, textarea {
+    font-family: 'Kanit', sans-serif;
+}
+  
+        .menu {
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #333;
+            font-size: 12px;
+            text-align: center;
+        }
+  
+        .menu a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+        .menu a i {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+  
+       .menu2 {
+    width: 250px; /* ปรับตามที่เหมาะสม */
+    background-color: white;
+    border-right: 1px solid #ddd;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 60px;
+    overflow-y: auto;
+    z-index: 1000; /* เพิ่มความสูงของ z-index */
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-200%); /* ซ่อนแถบเมนู */
+}
+
+        .menu2.slide-out {
+    transform: translateX(0); /* เลื่อนแถบเมนูออกมา */
+}
+      
+        .header-red {
+            background-color: #ff4b2b;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .header-red img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-bottom: 5px;
+        }
+
+        .header-red h3, .header-red p {
+            margin: 5px 0;
+            font-size: 12px;
+        }
+  
+        .menu-item {
+            padding: 10px 15px;
+            font-size: 13px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            color: #333;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            font-size: 17px;
+        }
+
+        .menu-item i.fa-chevron-down {
+            margin-left: auto;
+            font-size: 10px;
+        }
+
+        .menu-item a {
+            color: #333;
+            text-decoration: none;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            width: 100%;
+        }
+
+        .menu-item a:focus {
+            outline: none;
+        }
+
+        .menu-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .menu-item.active {
+            background-color: #ffe1dd;
+        }
+
+        .submenu {
+            display: none;
+            background-color: #f9f9f9;
+        }
+
+        .submenu .menu-item {
+            padding-left: 40px;
+            font-size: 13px;
+        }
+
+        .summary-section {
+            padding: 20px;
+            text-align: center;
+        }
+  
+
+        .summary-section button {
+            background-color: #ff4b2b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Kanit', sans-serif;
+        }
+        
+        .toast-message {
+    position: fixed;
+    top: 55px; /* ระยะห่างจากด้านบน */
+    right: 35px; /* ระยะห่างจากด้านขวา */
+    background-color: #4CAF50; /* สีเขียว */
+    color: white;
+    padding: 9px;
+    border-radius: 5px;
+    font-size: 13px;
+    z-index: 1000; /* ให้ข้อความแสดงเหนือองค์ประกอบอื่น */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeInOut 3s ease-in-out;
+}
+
+/* เอฟเฟกต์ข้อความจางหาย */
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+    </style>
+</head>
+<body>
+
+     <div class="menu">
+            <a href="shopping_mall.html">
+                <i class="las la-home fs-20 opacity-60"></i> Mall
+            </a>
+            <a href="dashboard.html">
+                <i class="las la-tachometer-alt fs-20 opacity-60"></i> เเผงควบคุม
+            </a>
+            <a href="shop.html">
+                <i class="las la-shopping-bag la-2x text-white"></i> รถเข็น
+            </a>
+            <a href="Notification.html">
+                <i class="las la-bell fs-20 opacity-60"></i> การแจ้งเตือน
+            </a>
+            <a href="sidebar_menu.html" id="menuButton"><i class="las la-user"></i> ฉัน</a>
+            </a>
+        </div>
+  
+    <div class="container">
+        <h2>ข้อมูลพื้นฐาน</h2>
+        <label for="name">ชื่อของคุณ</label>
+        <input type="text" id="name" placeholder="ชื่อ - นามสกุล">
+        
+        <label for="phone">โทรศัพท์ของคุณ</label>
+        <input type="text" id="phone" placeholder="โทรศัพท์ของคุณ">
+        
+        <label for="fileUpload">อัปโหลดรูปภาพ</label>
+<input type="file" id="fileUpload" accept="image/*">
+        
+        <label for="new-password">รหัสผ่านของคุณ</label>
+        <input type="password" id="new-password" placeholder="รหัสผ่านใหม่">
+        
+        <label for="confirm-password">ยืนยันรหัสผ่าน</label>
+        <input type="password" id="confirm-password" placeholder="ยืนยันรหัสผ่าน">
+        <button id="saveButton" class="button">บันทึก</button>
+<div id="toastMessage" class="toast-message" style="display: none;">
+    บันทึกข้อมูลเรียบร้อย
+</div>
+
+      <div id="toastMessage" class="toast-message" style="display: none;">
+    บันทึกข้อมูลเรียบร้อย
+</div>
+
+     <script>
+    document.getElementById('saveButton').addEventListener('click', function () {
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const newPassword = document.getElementById('new-password').value.trim();
+        const confirmPassword = document.getElementById('confirm-password').value.trim();
+        const fileInput = document.getElementById('fileUpload');
+        const toast = document.getElementById('toastMessage');
+
+        // ตรวจสอบว่าไม่มีช่องว่างในข้อมูล
+        if (!name || !phone || !newPassword || !confirmPassword) {
+            toast.textContent = "โปรดกรอกข้อมูลให้ครบถ้วน";
+            toast.style.backgroundColor = "#f44336"; // สีแดงสำหรับข้อผิดพลาด
+            toast.style.display = "block";
+            setTimeout(() => {
+                toast.style.display = "none";
+            }, 3000);
+            return;
+        }
+
+        // ตรวจสอบว่ารหัสผ่านตรงกัน
+        if (newPassword !== confirmPassword) {
+            toast.textContent = "รหัสผ่านไม่ตรงกัน";
+            toast.style.backgroundColor = "#f44336"; // สีแดงสำหรับข้อผิดพลาด
+            toast.style.display = "block";
+            setTimeout(() => {
+                toast.style.display = "none";
+            }, 3000);
+            return;
+        }
+
+        // บันทึกข้อมูลรูปภาพ
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                localStorage.setItem("userImage", event.target.result);
+                console.log("รูปภาพบันทึกแล้ว:", event.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // บันทึกข้อมูลใน Local Storage
+        localStorage.setItem("fullname", name);
+        localStorage.setItem("phone", phone);
+        localStorage.setItem("password", newPassword);
+
+        // แสดงข้อความแจ้งเตือน
+        toast.textContent = "บันทึกข้อมูลเรียบร้อย";
+        toast.style.backgroundColor = "#4CAF50"; // สีเขียวสำหรับสำเร็จ
+        toast.style.display = "block";
+        setTimeout(() => {
+            toast.style.display = "none";
+        }, 3000);
+    });
+</script>
+ 
+<script>
+document.getElementById('fileUpload').addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            localStorage.setItem("userImage", event.target.result);
+            alert("อัปโหลดรูปภาพเรียบร้อย");
+        };
+        reader.readAsDataURL(file);
+    }
+});
+</script>
+
+
+
+    <div class="container">
+        <h2>ที่อยู่</h2>
+        <div class="add-address">
+            <div class="plus">+</div>
+            <p>เพิ่มที่อยู่ใหม่</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>เปลี่ยนอีเมลของคุณ</h2>
+        <label for="email">อีเมลของคุณ</label>
+        <input type="email" id="email" placeholder="myname@gmail.com">
+        <input type="button" value="ยืนยัน" class="button">
+    </div>
+
+    <div class="container">
+        <h2>การตั้งค่าการชำระเงิน</h2>
+    <label for="bank-name">ชื่อบัญชี</label>
+    <input type="text" id="bank-name" placeholder="ชื่อ-นามสกุล">
+
+       
+            
+        </select>
+        
+        <label for="bank-name">ชื่อธนาคาร</label>
+<select id="bank-name">
+    <option value="">เลือกธนาคาร</option>
+    <option value="bbl">ธนาคารกรุงเทพ (BBL)</option>
+    <option value="kbank">ธนาคารกสิกรไทย (KBank)</option>
+    <option value="scb">ธนาคารไทยพาณิชย์ (SCB)</option>
+    <option value="ktb">ธนาคารกรุงไทย (KTB)</option>
+    <option value="tmb">ธนาคารทหารไทยธนชาต (TTB)</option>
+    <option value="bay">ธนาคารกรุงศรีอยุธยา (BAY)</option>
+    <option value="gsb">ธนาคารออมสิน (GSB)</option>
+    <option value="baac">ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร (BAAC)</option>
+    <option value="cimb">ธนาคารซีไอเอ็มบี ไทย (CIMB)</option>
+    <option value="uob">ธนาคารยูโอบี (UOB)</option>
+    <option value="tisco">ธนาคารทิสโก้ (TISCO)</option>
+    <option value="kkp">ธนาคารเกียรตินาคินภัทร (KKP)</option>
+    <option value="lhbank">ธนาคารแลนด์ แอนด์ เฮ้าส์ (LH Bank)</option>
+    <option value="megabank">ธนาคารแห่งประเทศไต้หวัน (Mega Bank)</option>
+    <option value="smethai">ธนาคารเพื่อการส่งออกและนำเข้าแห่งประเทศไทย (EXIM Bank)</option>
+    <option value="icbc">ธนาคารไอซีบีซี (ICBC)</option>
+</select>
+        
+        <label for="account-number">หมายเลขบัญชีธนาคาร</label>
+        <input type="text" id="account-number" placeholder="หมายเลขบัญชีธนาคาร">
+        
+        <button class="button">อัปเดตโปรไฟล์</button>
+    </div>
+
+    <div class="menu2">
+        <!-- ส่วนแถบสีแดงด้านบนของ sidebar -->
+        <div class="header-red">
+            <img src="https://via.placeholder.com/40" alt="User Image">
+            <h3 id="fullname">Test</h3>
+            <p id="phone">000</p>
+            <p id="usercode"></p>
+            <p id="userid">ID: 37244</p>
+        </div>
+
+        <div class="menu-item active">
+            <a href="dashboard.html"><i class="las la-home"></i> แผงควบคุม</a>
+        </div>
+        <div class="menu-item">
+            <i class="las la-gem"></i> ผลิตภัณฑ์ <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="submenu">
+            <a href="product_list.html" class="menu-item"><i class="las la-gem"></i> ผลิตภัณฑ์</a>
+            <a href="add_new_product.html" class="menu-item"><i class="las la-upload"></i> อัปโหลดผลิตภัณฑ์</a>
+            <div class="menu-item"><i class="las la-truck"></i> ผลิตภัณฑ์ขายส่ง</div>
+            <div class="menu-item"><i class="las la-file-upload"></i> ไฟล์ที่อัปโหลด</div>
+        </div>
+        <div class="menu-item">
+            <i class="las la-shopping-cart"></i> คำสั่งซื้อ <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="submenu">
+            <div class="menu-item"><i class="las la-clock"></i> รอดำเนินการ</div>
+            <div class="menu-item"><i class="las la-check-circle"></i> ได้รับการยืนยัน</div>
+        </div>
+        <div class="menu-item">
+            <a href="setting.html"><i class="las la-store"></i> การตั้งค่าร้านค้า</a>
+        </div>
+        <div class="menu-item">
+            <i class="las la-wallet"></i> กระเป๋าเงิน <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="submenu">
+            <a href="wallet_topup.html" class="menu-item"><i class="las la-wallet"></i> กระเป๋าเงินของฉัน</a>
+            <a href="history.html" class="menu-item"><i class="las la-history"></i> ประวัติการชำระเงิน</a>
+            <div class="menu-item"><i class="las la-tag"></i> คูปอง</div>
+            <a href="withdraw_history.html" class="menu-item"><i class="las la-money-bill-alt"></i> ยอดเงินในกระเป๋า</a>
+            <div class="menu-item"><i class="las la-sync"></i> ตั๋วสนับสนุน</div>
+        </div>
+        <div class="menu-item">
+          <a href="profile.html"><i class="las la-user"></i> จัดการโปรไฟล์</a>
+        </div>
+
+        <div class="summary-section">
+             <h3>ขายจำนวน</h3>
+            <p>ยอดขายของคุณ (เดือนปัจจุบัน)</p>
+            <button>฿0.00</button>
+            <p>ขายทั้งหมด: ฿0.00</p>
+        </div>
+
+        <div class="logout">
+    <a href="login.html" class="logout-link">
+        <button class="logout-button">
+            <i class="fas fa-sign-out-alt"></i> <span class="logout-text">ออกจากระบบ</span>
+        </button>
+    </a>
+</div>
+    </div>
+
+<style>
+.logout {
+    text-align: center; /* จัดให้อยู่ด้านขวา */
+    padding: 20px;
+}
+
+.logout-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.logout-button {
+    cursor: pointer;
+    padding: 8px 18px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* ระยะห่างระหว่างไอคอนและข้อความ */
+    margin-left: 38px;
+}
+
+.logout-button:hover {
+    background-color: #e60000; /* เปลี่ยนสีเมื่อ hover */
+}
+
+.logout-text {
+    font-family: 'Kanit', sans-serif; /* ใช้ฟอนต์ Kanit เฉพาะคำว่า "ออกจากระบบ" */
+    font-size: 14px;
+}
+</style>
+       
+       <script>
+        document.getElementById('saveButton').addEventListener('click', function () {
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const newPassword = document.getElementById('new-password').value.trim();
+    const confirmPassword = document.getElementById('confirm-password').value.trim();
+    const fileInput = document.getElementById('fileUpload');
+    const toast = document.getElementById('toastMessage');
+
+    if (!name || !phone || !newPassword || !confirmPassword) {
+        toast.textContent = "โปรดกรอกข้อมูลให้ครบถ้วน";
+        toast.style.backgroundColor = "#f44336";
+        toast.style.display = "block";
+        setTimeout(() => {
+            toast.style.display = "none";
+        }, 3000);
+        return;
+    }
+
+    if (newPassword !== confirmPassword) {
+        toast.textContent = "รหัสผ่านไม่ตรงกัน";
+        toast.style.backgroundColor = "#f44336";
+        toast.style.display = "block";
+        setTimeout(() => {
+            toast.style.display = "none";
+        }, 3000);
+        return;
+    }
+
+    // บันทึกข้อมูลใน Local Storage
+    localStorage.setItem("fullname", name);
+    localStorage.setItem("account", phone); // บันทึก account
+    localStorage.setItem("password", newPassword);
+
+    toast.textContent = "บันทึกข้อมูลเรียบร้อย";
+    toast.style.backgroundColor = "#4CAF50";
+    toast.style.display = "block";
+    setTimeout(() => {
+        toast.style.display = "none";
+    }, 3000);
+});
+
+        
+    </script>
+  
+      <script>
+    document.getElementById('menuButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    const menu = document.querySelector('.menu2');
+    let overlay = document.getElementById('overlay');
+
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'overlay';
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'transparent'; // ปรับให้โปร่งใส
+        overlay.style.zIndex = '999';
+        document.body.appendChild(overlay);
+    }
+
+    menu.classList.toggle('slide-out');
+    overlay.style.display = 'block';
+
+    overlay.addEventListener('click', function() {
+        menu.classList.remove('slide-out');
+        overlay.style.display = 'none';
+    });
+});
+</script>
+
+</body>
+</html>
